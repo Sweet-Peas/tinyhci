@@ -41,10 +41,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SO
 //
 // Redefine these based on your particular hardware.
 //
-#define CC3K_CS_PIN               10
-#define CC3K_IRQ_PIN              3
-#define CC3K_EN_PIN               7
-#define CC3K_IRQ_NUM              1
+#define CC3K_CS_PIN               6
+#define CC3K_IRQ_PIN              7
+#define CC3K_EN_PIN               5
+#define CC3K_IRQ_NUM              4
 
 //
 // Global variables
@@ -1045,17 +1045,37 @@ int select(long nfds, fd_set *readsds, fd_set *writesds, fd_set *exceptsds, time
   return return_status;
 }
 
-int connect(long sd, const sockaddr *addr, long addrlen)
+int connect(int sd, const sockaddr *addr, long addrlen)
 {
-  return 0;
+  DEBUG_LV2(
+    SERIAL_PRINTFUNCTION();
+    SERIAL_PRINTVAR(sd);
+    SERIAL_PRINTVAR(addr);
+    SERIAL_PRINTVAR(addrlen);
+    )
+
+  if (!addr || !addrlen)
+    return EFAIL;
+
+  /* Override the user */
+  addrlen = 8;
+
+  // Send connect command
+  hci_begin_command(HCI_CMND_CONNECT, 12 + addrlen);
+  hci_write_u32_le(sd);
+  hci_write_u32_le(0x08);
+  hci_write_u32_le(addrlen);
+  hci_write_array(addr, addrlen);
+
+  return hci_end_command_receive_u32_result(HCI_CMND_CONNECT);
 }
 
 int gethostbyname(char *hostname, unsigned short hnLength, uint32_t *ip)
 {
   DEBUG_LV2(
     SERIAL_PRINTFUNCTION();
-    SERIAL_PRINTVAR(url);
-    SERIAL_PRINTVAR(len);
+    SERIAL_PRINTVAR(hostname);
+    SERIAL_PRINTVAR(hnLength);
     SERIAL_PRINTVAR(ip);
     )
 

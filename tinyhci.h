@@ -202,7 +202,7 @@ void wlan_init(void);
 long netapp_timeout_values(unsigned long *aucDHCP, unsigned long *aucARP, unsigned long *aucKeepalive, unsigned long *aucInactivity);
 int32_t wlan_ioctl_set_connection_policy(bool should_connect_to_open_ap, bool should_use_fast_connect, bool use_profiles);
 int32_t wlan_connect(unsigned long sec_type, const char *ssid, long ssid_len, unsigned char *bssid, unsigned char *key, long key_len);
-int connect(long sd, const sockaddr *addr, long addrlen);
+int connect(int sd, const sockaddr *addr, long addrlen);
 int setsockopt(long sd, long level, long optname, const void *optval, unsigned long optlen);
 int socket(long domain, long type, long protocol);
 int listen(int sd, int backlog);
