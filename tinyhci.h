@@ -39,7 +39,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SO
 //
 // Serial port helper macros.
 //
-#define SERIAL_PORT                Serial1
+#define SERIAL_PORT                Serial
 #define SERIAL_PRINT(x)            SERIAL_PORT.print(x); SERIAL_PORT.flush()
 #define SERIAL_PRINTLN(x)          SERIAL_PORT.println(x); SERIAL_PORT.flush()
 #define SERIAL_PRINTFUNCTION()     SERIAL_PORT.print("==> "); SERIAL_PORT.print(__FUNCTION__); SERIAL_PORT.println(" <=="); SERIAL_PORT.flush()
@@ -54,9 +54,15 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SO
 #define HCI_EVNT_WLAN_UNSOL_CONNECT             0x8001
 #define HCI_EVNT_WLAN_UNSOL_DISCONNECT          0x8002
 #define HCI_EVNT_WLAN_UNSOL_INIT                0x8004
+#define HCI_EVNT_WLAN_TX_COMPLETE               0x8008
 #define HCI_EVNT_WLAN_UNSOL_DHCP                0x8010
+#define HCI_EVNT_WLAN_ASYNC_PING_REPORT         0x8040
+#define HCI_EVNT_WLAN_ASYNC_SIMPLE_CONFIG_DONE  0x8080
 #define HCI_EVNT_WLAN_KEEPALIVE                 0x8200
+#define HCI_EVNT_ASYNC_ARP_DONE                 0x8400
 #define HCI_EVNT_WLAN_UNSOL_TCP_CLOSE_WAIT      0x8800
+#define HCI_EVNT_ASYNC_ARP_WAITING              0x8900
+#define HCI_EVNT_CC3000_LOCKED                  0x8A00
 
 typedef struct _in_addr_t
 {
